@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Hugo 0.88.1">
+<title>コンディションデータ</title>
+
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/5.1/examples/navbar-fixed/">
+<!-- Bootstrap core CSS -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<!-- Custom styles for this template -->
+<link th:href="@{/css/navbar-top-fixed.css}" rel="stylesheet">
+
+<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.ui.datepicker-ja.min.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+
+</head>
+<body>
+	<div th:replace="~{block/header::header}"></div>
+	
+	<div class="body_container text-center">
+
+	<div class="flexbox centerContents">
+		<h3>アルバム選択</h3>
+		<!-- forでアルバム一覧を表示してアルバム選択 -->
+		<input class="form-control" type="text" id="" />	
+		<button class="btn btn-default" id="chooseAlbumBtn" type="button" >決定</button>
+		
+		<h3>再生間隔：</h3>
+		<input class="form-control" type="number" id="playSpan" value="5" />
+	</div>
+	
+	<div class="flexbox centerContents mt-5">
+		<button class="btn btn-default" id="backBtn" type="button" >◀</button>
+		<button class="btn btn-default" id="playPauseBtn" type="button" >停止</button>
+		<button class="btn btn-default" id="nextBtn" type="button" >▶</button>
+	</div>
+
+	<div class="text-center" id="mediaContainer">
+		<div class="flexbox centerContents">
+			<h4 id="mediaCnt"></h4>
+		</div>
+		<img id="photo" src=''>
+	</div>
+
+</div>
+	
+	
+	
+	<script type="text/javascript" >
+var mediaIndex = 0;
+var mediaDatas = undefined;
+var pause = false;
+var mediaPlayTimeout = undefined;
+
+$(function () {
+	var device = isDevice();
+	getPhotoUrls();
+
+	$('#backBtn').click(function () {
+		mediaIndex--;
+		if(mediaIndex < 0) mediaIndex = mediaDatas.length-1;
+		showImage();
+	});
+
+	$('#nextBtn').click(function () {
+		mediaIndex++;
+		if(mediaDatas.length <= mediaIndex) mediaIndex = 0;
+		showImage();
+	});
+
+	$('#playPauseBtn').click(function () {
+		if(pause){
+			$('#playPauseBtn').text('停止');
+			pause = false;
+			clearTimeout(mediaPlayTimeout);
+			playMedia();
+		}else{
+			$('#playPauseBtn').text('再生');
+			pause = true;
+		}
+	});
+});
+
+function playMedia(){
+	if(pause) return;
+	if(mediaDatas.length == 0) return;
+	if(mediaDatas.length <= mediaIndex) mediaIndex = 0;
+	
+	showImage();
+
+	mediaIndex++;
+
+	var span = Number($('#playSpan').val()) * 1000;
+	if(span < 1000) span = 1000;
+	mediaPlayTimeout = setTimeout(playMedia, span);
+}
+
+function showImage(){
+	$('#photo').prop('src', mediaDatas[mediaIndex].src);
+	$('#mediaCnt').text("("+(mediaIndex+1)+"/"+mediaDatas.length+")");
+}
+
+function getPhotoUrls(){
+    post(
+        '/api/getPhotoUrl/',
+        {},
+        function (response){
+            // success
+            if(response && response.result == 'OK'){
+            	if(response.authurl){
+            		window.open(response.authurl);
+            		alert("認証してください。");
+            		return;
+            	}
+            	
+            	mediaDatas = response.photos;
+            	playMedia();
+            }else{
+                alert("画像取得失敗");
+            }
+        },
+        function (){
+            // fail
+            alert('通信エラー');
+        }
+    );
+}
+
+</script>
+	
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+body {
+	max-width: 30rem;
+	margin: auto;
+}
+h2 {
+	text-align: center;
+	margin-bottom: 3rem;
+}
+.radio-select li {
+	display: inline-block;
+	border-radius: 5px;
+	position: relative;
+	margin: 0 1rem;
+}
+/* input は隠す */
+.radio-select input {
+  display: none;
+}
+/* labelはz-index1 で上に持ってくる */
+.radio-select label {
+	display: block;
+	width: 100px;
+	height: 100px;
+	position: relative;
+  z-index: 1;
+}
+/* labelの下に表示させる要素のスタイルを position absolute で指定 */
+.radio-select .choice-btn {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  text-align: center;
+	background: #fff;
+	border: 10px solid transparent;
+	border-radius: 50%;
+  box-sizing: border-box;
+	transition: .4s;
+}
+/* アイコンとテキストのスタイル。*/
+.radio-select i {
+  font-size: 5rem;
+	transition: .4s;
+}
+.radio-select p {
+	position: fixed;
+	top: 4rem;
+	left: 0;
+  left: 50%;
+  transform: translateX(-50%);
+	margin: auto;
+	width: 7rem;
+	text-align: center;
+	z-index: 2;
+	opacity: 0;
+	transition: .4s;
+	background: white;
+	border-radius: 2rem;
+	font-weight: bold;
+	
+}
+/* condition マウスオーバー時のスタイル */
+.radio-select label:hover {
+  cursor: pointer;
+}
+.radio-select input[type="radio"]:checked + label + .choice-btn i,
+.radio-select li:hover i {
+	transform: scale(1.1);
+}
+/* 選択時のスタイル（要素毎に色を変更） */
+.radio-select li:nth-child(1) input[type="radio"]:checked + label + .choice-btn {
+	background: #FBFFB9;
+}
+.radio-select li:nth-child(2) input[type="radio"]:checked + label + .choice-btn {
+	background: #D3F8E2;
+}
+.radio-select li:nth-child(3) input[type="radio"]:checked + label + .choice-btn {
+	background: #EEC0C6;
+}
+.radio-select input[type="radio"]:checked + label + .choice-btn + p {
+	opacity: 1;
+}

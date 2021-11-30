@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Hugo 0.88.1">
+<title>メンタルグラフ</title>
+
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/5.1/examples/navbar-fixed/">
+<!-- Bootstrap core CSS -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<!-- Custom styles for this template -->
+<link th:href="@{/css/navbar-top-fixed.css}" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+</head>
+<body>
+	<div th:replace="~{block/header::header}"></div>
+	
+	<p>グラフ</p>
+	
+	<canvas id="mentalChart"></canvas>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	 	var ctx = document.getElementById("mentalChart").getContext('2d');
+	 	var mentalChart = new Chart(ctx, {
+	        type: 'line',
+	        data: {
+	            // コントローラーで格納したdayを変数式で取り出す
+	            labels: /*[[${day}]]*/ 'day',
+	            datasets: [
+	                {
+	                    label: "Mental History",
+	                    borderColor: 'rgb(255, 0, 0)',
+	                    lineTension: 0,
+	                    fill: false,
+	                    // 上記と同様、mentalを変数式で取り出す
+	                    data: /*[[${mental}]]*/ 'mental',
+	                },
+	            ]
+	        },
+	        options: {
+	            responsive: true,
+	        }
+	    });
+	 	/*]]>*/
+	 	
+	</script>
+	
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
+
+</body>
+</html>
