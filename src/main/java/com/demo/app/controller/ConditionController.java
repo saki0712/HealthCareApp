@@ -114,7 +114,7 @@ public class ConditionController {
     	Model model,
     	RedirectAttributes redirectAttributes) {
     	
-    	System.out.println(result);
+//    	System.out.println(result);
     	
         if (!result.hasErrors()) {
 
@@ -149,7 +149,7 @@ public class ConditionController {
 		String user_name = userDetails.getUsername();
 
 		List<Condition> list = conditionService.findByDate(date_from, date_to, user_name);
-		System.out.println(condition.getUser_name());
+//		System.out.println(condition.getUser_name());
 		
 		model.addAttribute("title", user_name + "さんのコンディションデータ");
 		model.addAttribute("list", list);

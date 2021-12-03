@@ -32,11 +32,7 @@
 
 		<h2>今日は</h2> <input type="date" name="day" th:value="*{day}" />
 
-		<h2>体調</h2> <!--  <select name="condition">
-			<option value="1" th:selected="*{condition == 1}">GREAT</option>
-			<option value="2" th:selected="*{condition == 2}">GOOD</option>
-			<option value="3" th:selected="*{condition == 3}">BAD</option>
-		</select> -->
+		<h2>体調</h2>
 
 			<ul class="radio-select">
 				<li>
@@ -84,13 +80,6 @@
 				</li>
 			</ul>
 		
-		<!-- <input type="radio" th:src="@{/img/mental1.png}" name="mental" value="1" >
-			<input type="radio" th:src="@{/img/mental2.png}" name="mental" value="2" >
-			<input type="radio" th:src="@{/img/mental3.png}" name="mental" value="3" >  -->
-			
-			<!--  <option value="1" th:selected="*{mental == 1}">GREAT</option> 
-			<option value="2" th:selected="*{mental == 2}">GOOD</option>
-			<option value="3" th:selected="*{mental == 3}">BAD</option> -->
 			<br>
 			<div th:if="${#fields.hasErrors('mental')}" th:errors="*{mental}"></div>
 
@@ -122,16 +111,13 @@
 			<br>
 			<div th:if="${#fields.hasErrors('achievement')}" th:errors="*{achievement}"></div>
 		
-			<!-- <select name="achievement"> <option value="1" th:selected="*{achievement == 1}">GREAT</option>
-			<option value="2" th:selected="*{achievement == 2}">GOOD</option>
-			<option value="3" th:selected="*{achievement == 3}">BAD</option> </select>-->
-		
-		<label>メモ(200字以内)：</label> <input type="text" name="memo"
+		<h2>メモ(200字以内)：</h2> <input type="text" name="memo"
 			th:value="*{memo}" /><br>
 		<div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}"></div>
-
+		
+		<br>
 		<input type="hidden" name="user_name" th:value="${user_name}">
-		<input type="submit" value="登録">
+		<input type="submit" class="btn btn-secondary" value="登録">
 	</form>
 
 	<script

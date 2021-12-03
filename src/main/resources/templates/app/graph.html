@@ -23,7 +23,7 @@
 <body>
 	<div th:replace="~{block/header::header}"></div>
 	
-	<form method="GET" th:action="@{/condition/search}" th:object="${condition}">
+	<form method="GET" th:action="@{/condition/graph}" th:object="${condition}">
 		<label>日付検索</label>
 		<input type="date" name="graph_from">から
 		<input type="date" name="graph_to">まで

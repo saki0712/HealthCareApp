@@ -18,54 +18,113 @@
 	crossorigin="anonymous">
 <!-- Custom styles for this template -->
 <link th:href="@{/css/navbar-top-fixed.css}" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+<link th:href="@{/css/condition_details.css}" rel="stylesheet">
 </head>
 <body>
 	<div th:replace="~{block/header::header}"></div>
 
 	<h1>コンディション詳細</h1>
 	<p th:if="${complete}" th:text="${complete}"></p>
-
+	
+	
 	<form method="POST" th:action="@{/condition/update}"
 		th:object="${condition}">
+		<h2>日付</h2> <input type="date" name="day" th:value="*{day}" />
 
-		<label>今日は：</label> <input type="date" name="day" th:value="*{day}" /><br>
+		<h2>体調</h2>
 
-		<label>体調：</label> <select name="condition">
-			<option value="1" th:selected="*{condition == 1}">GREAT</option>
-			<option value="2" th:selected="*{condition == 2}">GOOD</option>
-			<option value="3" th:selected="*{condition == 3}">BAD</option>
-		</select><br>
-		<div th:if="${#fields.hasErrors('condition')}"
-			th:errors="*{condition}"></div>
+			<ul class="radio-select">
+				<li>
+					<input type="radio" id="great" name="condition" value="1"/> 
+					<label for="great"></label>
+					<div class="choice-btn"><i class="far fa-smile-beam"></i></div>
+					<p>SMILE</p>
+				</li>
+				<li>
+					<input type="radio" id="good" name="condition" value="2"/>
+					<label for="good"></label>
+					<div class="choice-btn"><i class="far fa-smile"></i></div>
+					<p>NORMAL</p>
+				</li>
+				<li>
+					<input type="radio" id="bad" name="condition" value="3"/>
+					<label for="bad"></label>
+					<div class="choice-btn"><i class="far fa-angry"></i></div>
+					<p>ANGRY</p>
+				</li>
+		    </ul>
+			<br>
+			<div th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}"></div>
 
-		<label>メンタル：</label> <select name="mental">
-			<option value="1" th:selected="*{mental == 1}">GREAT</option>
-			<option value="2" th:selected="*{mental == 2}">GOOD</option>
-			<option value="3" th:selected="*{mental == 3}">BAD</option>
-		</select><br>
-		<div th:if="${#fields.hasErrors('mental')}" th:errors="*{mental}"></div>
+		<h2>メンタル</h2>
+
+			<ul class="radio-select">
+				<li>
+					<input type="radio" id="m_great" name="mental" value="1"/>
+					<label for="m_great"></label>
+					<div class="choice-btn"><i class="far fa-smile-beam"></i></div>
+					<p>SMILE</p>
+				</li>
+				<li>
+					<input type="radio" id="m_good" name="mental" value="2"/>
+					<label for="m_good"></label>
+					<div class="choice-btn"><i class="far fa-smile"></i></div>
+					<p>NORMAL</p>
+				</li>
+				<li>
+					<input type="radio" id="m_bad" name="mental" value="3"/>
+					<label for="m_bad"></label>
+					<div class="choice-btn"><i class="far fa-angry"></i></div>
+					<p>ANGRY</p>
+				</li>
+			</ul>
 		
-		<label>1日の達成感：</label> <select name="achievement">
-			<option value="1" th:selected="*{achievement == 1}">GREAT</option>
-			<option value="2" th:selected="*{achievement == 2}">GOOD</option>
-			<option value="3" th:selected="*{achievement == 3}">BAD</option>
-		</select><br>
-		<div th:if="${#fields.hasErrors('achievement')}"
-			th:errors="*{achievement}"></div>
+			<br>
+			<div th:if="${#fields.hasErrors('mental')}" th:errors="*{mental}"></div>
 
-		<label>メモ(200字以内)：</label> <input type="text" name="memo"
+
+
+		<h2>1日の達成感</h2> 
+		
+			<ul class="radio-select">
+				<li>
+					<input type="radio" id="a_great" name="achievement" value="1"/>
+					<label for="a_great"></label>
+					<div class="choice-btn"><i class="far fa-smile-beam"></i></div>
+					<p>SMILE</p>
+				</li>
+				<li>
+					<input type="radio" id="a_good" name="achievement" value="2"/>
+					<label for="a_good"></label>
+					<div class="choice-btn"><i class="far fa-smile"></i></div>
+					<p>NORMAL</p>
+				</li>
+				<li>
+					<input type="radio" id="a_bad" name="achievement" value="3"/>
+					<label for="a_bad"></label>
+					<div class="choice-btn"><i class="far fa-angry"></i></div>
+					<p>ANGRY</p>
+				</li>
+			</ul>
+			
+			<br>
+			<div th:if="${#fields.hasErrors('achievement')}" th:errors="*{achievement}"></div>
+		
+		<h2>メモ(200字以内)：</h2> <input type="text" name="memo"
 			th:value="*{memo}" /><br>
 		<div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}"></div>
 
+		<br>	
 		<input type="hidden" name="id" th:value="${id}">
-		<input type="submit" value="更新">
+		<div class="buttons"><input type="submit" class="btn btn-primary"  value="更新"></div>
 
+	</form>
+
+	<form method="POST" th:action="@{/condition/delete}" th:object="${condition}">
+		<input type="hidden" name="id" th:value="${id}">
+		<div class="buttons"><input type="submit" class="btn btn-danger" value="削除"></div>
 	</form>
 	
-	<form method="POST" th:action="@{/condition/delete}" th:object="${condition}">
-		<input type="hidden" name="id" th:value="${id}"> <input
-			type="submit" value="削除">
-	</form>
-
 </body>
 </html>

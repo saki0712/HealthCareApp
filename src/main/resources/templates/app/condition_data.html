@@ -35,17 +35,17 @@
 	<tr th:each="obj : ${list}">
 		<td th:text=${obj.day}></td>
 		<!-- 1==great　2==good　3==bad -->
-		<td th:if="${obj.condition == 1}"><i class="far fa-smile-beam"></i></td>
+		<td th:if="${obj.condition == 3}"><i class="far fa-smile-beam"></i></td>
 		<td th:if="${obj.condition == 2}"><i class="far fa-smile"></i></td>
-		<td th:if="${obj.condition == 3}"><i class="far fa-angry"></i></td>
+		<td th:if="${obj.condition == 1}"><i class="far fa-angry"></i></td>
 		
-		<td th:if="${obj.mental == 1}"><i class="far fa-smile-beam"></i></td>
+		<td th:if="${obj.mental == 3}"><i class="far fa-smile-beam"></i></td>
 		<td th:if="${obj.mental == 2}"><i class="far fa-smile"></i></td>
-		<td th:if="${obj.mental == 3}"><i class="far fa-angry"></i></td>
+		<td th:if="${obj.mental == 1}"><i class="far fa-angry"></i></td>
 		
-		<td th:if="${obj.achievement == 1}"><i class="far fa-smile-beam"></i></td>
+		<td th:if="${obj.achievement == 3}"><i class="far fa-smile-beam"></i></td>
 		<td th:if="${obj.achievement == 2}"><i class="far fa-smile"></i></td>
-		<td th:if="${obj.achievement == 3}"><i class="far fa-angry"></i></td>
+		<td th:if="${obj.achievement == 1}"><i class="far fa-angry"></i></td>
 		
 		<td th:text=${obj.memo}></td>
 		<td><a type="button" th:href="@{/condition/{id}(id=${obj.id})}">詳細</a></td>

@@ -101,13 +101,13 @@ public class ConditionDaoImpl implements ConditionDao {
 	public List<Condition> findByDate(String date_from, String date_to, String user_name){
 		String sql  = "SELECT * FROM `condition` WHERE day BETWEEN \"" + date_from + "\" AND \"" + date_to + "\" AND `condition`.user_name LIKE \"" + user_name + "\";";
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
-		System.out.println(sql);
+//		System.out.println(sql);
 		List<Condition> list = new ArrayList<Condition>();
 		for(Map<String, Object> result : resultList) {
 			Condition condition = new Condition();
 			condition.setId((int)result.get("id"));
 			condition.setUser_name((String)result.get("user_name"));
-			System.out.println(condition.getUser_name());
+//			System.out.println(condition.getUser_name());
 			condition.setDay((Date)result.get("day"));
 			condition.setCondition((int)result.get("condition"));
 			condition.setMental((int)result.get("mental"));
