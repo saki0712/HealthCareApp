@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,9 @@ import com.demo.service.UserDetailsImpl;
 @Controller
 @RequestMapping("/condition")
 public class ConditionController {
+	
+	@Value("${credential_path}") 
+	private String credential_path;
 	
     private final ConditionService conditionService;
 
@@ -191,6 +195,11 @@ public class ConditionController {
 		model.addAttribute("day", dayArray);
 		
 		return "app/graph";
+	}
+	
+	@GetMapping("/photos")
+	public String photos(Model model) {
+		return "app/photos";
 	}
 	
 }
