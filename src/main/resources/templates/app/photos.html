@@ -28,7 +28,7 @@
 		<button id="login" onclick="login()" style="display: none;">ログイン</button>
 		<button id="logout" onclick="logout()" style="display: none;">ログアウト</button>
 		<button id="getAlbums" onclick="getAlbums()" style="display: none;">アルバムリストを取得する</button>
-		<button id="getPhotos" onclick="getPhotos()" style="display: none;">アルバムの写真を取得する</button>
+		<button id="getPhotos" onclick="showPhotos()" style="display: none;">アルバムの写真を取得する</button>
 	</section>
 
     <div id="albums">
@@ -36,9 +36,7 @@
         </select>
     </div>
     
-    <div id="photos">
-    
-    </div>
+    <img id="photo">
 
     <script defer src="https://apis.google.com/js/api.js"
         onload="this.onload=function(){};handleClientLoad()"
@@ -114,20 +112,24 @@
         });
     }
     
-    // 取得したアルバムの写真を表示
+    // 取得したアルバムの写真をスライドショーで表示させる準備
     function getPhotos(){
+        let photosUrl = [];
         photosRequest().then((resp) => {
             resp.mediaItems.forEach((photo) => {
-                console.log(photo);
-                var img = document.createElement('img');
-                img.setAttribute('src', photo.baseUrl);
-                console.log(img);
-                document.getElementById('photos').appendChild(img);
+                photosUrl.push(photo.baseUrl);
+                console.log(photosUrl);
             });
+            let num = -1;
+            num = Math.floor(Math.random()*photosUrl.length);
+            document.getElementById("photo").src = photosUrl[num];
         });
     }
     
-    
+    // 取得したアルバムの写真をスライドショーで表示
+    function showPhotos() {
+        setInterval(getPhotos,1000); 
+    }
     
      // アルバムリスト取得 REST API実行
     function albumsRequest() {
