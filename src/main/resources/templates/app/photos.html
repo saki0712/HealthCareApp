@@ -8,7 +8,7 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.88.1">
-<title>コンディションデータ</title>
+<title>Photos</title>
 
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/5.1/examples/navbar-fixed/">
@@ -19,179 +19,179 @@
 <!-- Custom styles for this template -->
 <link th:href="@{/css/navbar-top-fixed.css}" rel="stylesheet">
 
-<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
-<link rel="stylesheet" th:href="@{/css/common.css}" />
-<script type="text/javascript"
-	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
-<script type="text/javascript"
-	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-<script th:src="@{/js/common.js}"></script>
-
 </head>
 <body>
 	<div th:replace="~{block/header::header}"></div>
 
-	<div class="body_container text-center">
+	<h1>Album Photos</h1>
+	<section>
+		<button id="login" onclick="login()" style="display: none;">ログイン</button>
+		<button id="logout" onclick="logout()" style="display: none;">ログアウト</button>
+		<button id="getAlbums" onclick="getAlbums()" style="display: none;">アルバムリストを取得する</button>
+		<button id="getPhotos" onclick="getPhotos()" style="display: none;">アルバムの写真を取得する</button>
+	</section>
 
-		<div class="flexbox centerContents">
-			<h3>アルバム選択</h3>
-			<!-- アルバム一覧を表示してアルバム選択 -->
-			<select name="album" id="album">
-			<option class="form-control" value="" label="" id="albumId"></option> <!-- valueのところに各アルバムid, labelはアルバム名(title) -->
-			</select>
-			<h3>再生間隔：</h3>
-			<input class="form-control" type="number" id="playSpan" value="5" />
-		</div>
+    <div id="albums">
+        <select id="selectAlbum" name="selectAlbum">
+        </select>
+    </div>
+    
+    <div id="photos">
+    
+    </div>
 
-		<div class="flexbox centerContents mt-5">
-			<button class="btn btn-default" id="backBtn" type="button">◀</button>
-			<button class="btn btn-default" id="playPauseBtn" type="button">停止</button>
-			<button class="btn btn-default" id="nextBtn" type="button">▶</button>
-		</div>
+    <script defer src="https://apis.google.com/js/api.js"
+        onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    
+    <script defer type="text/javascript">
+      
+    const apiKey = 'AIzaSyAQAfHFDGo__LezKIS1mPDS5rz0-HSt2q0';
+    const clientId = '808458942654-1s8ba33h9ik6j931eud5pdielct652fv.apps.googleusercontent.com';
+    const discoveryDocs = [];
+    const scopes = 'https://www.googleapis.com/auth/photoslibrary';
 
-		<div class="text-center" id="mediaContainer">
-			<div class="flexbox centerContents">
-				<h4 id="mediaCnt"></h4>
-			</div>
-			<img id="photo" src=''>
-		</div>
+    // Google API Client Library for JavaScript ロード時のイベント
+    function handleClientLoad() {
+      gapi.load('client:auth2', () => {
+        gapi.client.init({
+          apiKey: apiKey,
+          discoveryDocs: discoveryDocs,
+          clientId: clientId,
+          scope: scopes
+        }).then(function () {
+          // サインイン状態を監視し、状態に変化があったときに「updateSigninStatus」を呼ぶ
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+          // 初期起動時のサインイン状態で画面制御
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+      });
+    }
 
-	</div>
+    // ログイン
+    function login() {
+      gapi.auth2.getAuthInstance().signIn();
+    }
 
+    // ログアウト
+    function logout() {
+      gapi.auth2.getAuthInstance().signOut();
+      gapi.auth2.getAuthInstance().disconnect();
+    }
 
+    // ログイン・ログアウト状態に変更が発生した時に呼ばれる関数
+    function updateSigninStatus(isSignedIn) {
+      if (isSignedIn) {
+        //ログイン状態
+        document.getElementById("login").style.display = 'none';
+        document.getElementById("logout").style.display = 'block';
+        document.getElementById("getAlbums").style.display = 'block';
+        document.getElementById("getPhotos").style.display = 'block';
+        document.getElementById("selectAlbum").style.display = 'block';
+      } else {
+        //ログアウト
+        document.getElementById("login").style.display = 'block';
+        document.getElementById("logout").style.display = 'none';
+        document.getElementById("getAlbums").style.display = 'none';
+        document.getElementById("getPhotos").style.display = 'none';
+        document.getElementById("selectAlbum").style.display = 'none';
+      }
+    }
+    
+    // 取得したアルバム一覧を選択リストで表示
+    function getAlbums(){
+        albumsRequest().then((resp) => {
+            resp.albums.forEach((album) => {
+                console.log(album);
+                var title = document.createElement('option');
+                title.setAttribute('value', album.id);
+                title.innerHTML = album.title;
+                console.log(title.innerHTML);
+                console.log(title);
+                document.getElementById('selectAlbum').appendChild(title);
+        	});
+        });
+    }
+    
+    // 取得したアルバムの写真を表示
+    function getPhotos(){
+        photosRequest().then((resp) => {
+            resp.mediaItems.forEach((photo) => {
+                console.log(photo);
+                var img = document.createElement('img');
+                img.setAttribute('src', photo.baseUrl);
+                console.log(img);
+                document.getElementById('photos').appendChild(img);
+            });
+        });
+    }
+    
+    
+    
+     // アルバムリスト取得 REST API実行
+    function albumsRequest() {
+      // Promissで結果を返せるようにする
+      return new Promise((resolve, reject) => {
+      
+        // リクエストの作成
+        var restRequest = gapi.client.request({
+          'path': 'https://photoslibrary.googleapis.com/v1/albums',
+          'params' : {
+             'pageSize' : 10    // １回あたり最大１0件のアルバムを取得する
+           }
+        });
 
-	<script type="text/javascript">
-		var albumDatas = undefined;
-		var albumIndex = 0;
-		var mediaIndex = 0;
-		var mediaDatas = undefined;
-		var pause = false;
-		var mediaPlayTimeout = undefined;
+        // リクエストを実行
+        restRequest.execute((resp) => {
+          if (resp.error) {
+            reject(resp.error)  // エラーなのでreject
+            //console.log("error");
+          } else {
+            resolve(resp)       // 正常なのでresolve
+            //console.log("ok");
+          }
+        });
+      });  
+    }
+     
+    // アルバムの写真取得 REST API実行
+    function photosRequest() {
+        // albumIdを受け取る
+        const albumId = submitAlbumId();
+        
+      // Promissで結果を返せるようにする
+      return new Promise((resolve, reject) => {
+      
+        // リクエストの作成
+        var restRequest = gapi.client.request({
+          'path': 'https://photoslibrary.googleapis.com/v1/mediaItems:search',
+          'method': 'POST',
+          'body' : {
+              "albumId" : albumId,
+              "pageSize" : 100
+           }
+        });
 
-		$(function() {
-			var device = isDevice();
-			getAlbumList();
-			getPhotoUrls();
-
-			$('#backBtn').click(function() {
-				mediaIndex--;
-				if (mediaIndex < 0)
-					mediaIndex = mediaDatas.length - 1;
-				showImage();
-			});
-
-			$('#nextBtn').click(function() {
-				mediaIndex++;
-				if (mediaDatas.length <= mediaIndex)
-					mediaIndex = 0;
-				showImage();
-			});
-
-			$('#playPauseBtn').click(function() {
-				if (pause) {
-					$('#playPauseBtn').text('停止');
-					pause = false;
-					clearTimeout(mediaPlayTimeout);
-					playMedia();
-				} else {
-					$('#playPauseBtn').text('再生');
-					pause = true;
-				}
-			});
-		});
-
-		//アルバムリスト表示
-		function showAlbums() {
-			if (albumDatas.length == 0)
-				return;
-			if (albumDatas.length <= albumIndex)
-				albumIndex = 0;
-			// アルバムid,タイトル,(できればカバー写真)
-			$('#album').prop('value', albumDatas[albumIndex].id);
-			$('#album').prop('label', albumDatas[albumIndex].title);
-		}
-
-		//写真を流す
-		function playMedia() {
-			if (pause)
-				return;
-			if (mediaDatas.length == 0)
-				return;
-			if (mediaDatas.length <= mediaIndex)
-				mediaIndex = 0;
-
-			showImage();
-
-			mediaIndex++;
-
-			var span = Number($('#playSpan').val()) * 1000;
-			if (span < 1000)
-				span = 1000;
-			mediaPlayTimeout = setTimeout(playMedia, span);
-		}
-
-		//写真表示
-		function showImage() {
-			//id=photo src属性の値を設定
-			$('#photo').prop('src', mediaDatas[mediaIndex].src);
-			$('#mediaCnt').text("("+(mediaIndex+1)+"/"+mediaDatas.length+")");
-		}
-
-		//アルバムリスト
-		function getAlbumList() {
-			get('/api/getAlbumList/',
-
-			function(response) {
-				// success
-				if (response && response.result == 'OK') {
-					if (response.authurl) {
-						window.open(response.authurl);
-						alert("認証してください。");
-						return;
-					}
-
-					// albumsにはアルバムid,title
-					albumDatas = response.albums;
-					
-					albumIndex++;
-					showAlbums();
-					
-				} else {
-					alert("アルバムリスト取得失敗");
-				}
-			}, function() {
-				// fail
-				alert('通信エラー');
-			});
-		}
-
-		//写真
-		function getPhotoUrls(albumId) {
-			post('/api/getPhotoUrl/', {
-				//選択されたアルバムid
-				albumId: albumId
-			}, function(response) {
-				// success
-				if (response && response.result == 'OK') {
-					if (response.authurl) {
-						window.open(response.authurl);
-						alert("認証してください。");
-						return;
-					}
-
-					// photosにはsrc(画像URL),type(画像タイプ)
-					mediaDatas = response.photos;
-					playMedia();
-				} else {
-					alert("画像取得失敗");
-				}
-			}, function() {
-				// fail
-				alert('通信エラー');
-			});
-		}
-	</script>
-
-
+        // リクエストを実行
+        restRequest.execute((resp) => {
+          if (resp.error) {
+            reject(resp.error)  // エラーなのでreject
+            console.log("error");
+          } else {
+            resolve(resp)       // 正常なのでresolve
+            console.log("ok");
+          }
+        });
+      });  
+    }
+    
+    // albumIdを取得
+    function submitAlbumId() {
+        const albumId = document.getElementById("selectAlbum").value;
+        console.log(albumId);
+        return albumId;
+    }        
+      </script>
 </body>
 </html>
