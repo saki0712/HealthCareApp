@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +25,6 @@ import com.demo.service.UserDetailsImpl;
 @Controller
 @RequestMapping("/condition")
 public class ConditionController {
-	
-	@Value("${credential_path}") 
-	private String credential_path;
 	
     private final ConditionService conditionService;
 
@@ -75,7 +71,7 @@ public class ConditionController {
     	
         if (!result.hasErrors()) {
             conditionService.insert(condition);
-            return "redirect:/condition";
+            return "redirect:/condition/graph";
         } else {
         	//エラーの場合
 //        	condition.setNewCondition(true);
