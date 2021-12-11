@@ -12,43 +12,42 @@ public class Condition {
 	private String user_name;
 	private Date day;
 	
+	/* 今後使うかもしれない
 	@Digits(integer = 1, fraction = 0)
 	@NotNull (message = "内容を入力してください。")
 	private int condition;
+	*/
 	
 	@Digits(integer = 1, fraction = 0)
 	@NotNull (message = "内容を入力してください。")
 	private int mental;
 	
+	/* 今後使うかもしれない
 	@Digits(integer = 1, fraction = 0)
 	@NotNull (message = "内容を入力してください。")
 	private int achievement;
+	*/
 	
-	@Size(min = 1, max = 200, message = "200文字以内で入力してください。")
+	@Size(min = 1, max = 200, message = "200文字以内で入力してください")
 	private String memo;
-	
-    //HTMLファイルでの分岐処理
-    private boolean newCondition;
     
-	public Condition(int id, String user_name, Date day, int condition, int mental, int achievement, String memo,
-			boolean newCondition) {
+	public Condition(int id, String user_name, Date day,int mental, String memo) {
 		this.id = id;
 		this.setUser_name(user_name);
 		this.day = day;
-		this.condition = condition;
+		//this.condition = condition;
 		this.mental = mental;
-		this.achievement = achievement;
+		//this.achievement = achievement;
 		this.memo = memo;
-		this.newCondition = newCondition;
 	}
 	
 	//コンディション登録
 	public Condition(String user_name, Date day, int condition, int mental, int achievement, String memo) {
 		this.user_name = user_name;
 		this.day = day;
-		this.condition = condition;
+		//this.condition = condition;
 		this.mental = mental;
-		this.achievement = achievement;
+		//this.achievement = achievement;
 		this.memo = memo;
 	}
 	
@@ -63,28 +62,12 @@ public class Condition {
 	
 	public Condition() {
 	}
-
-	public int getCondition() {
-		return condition;
-	}
-	public void setCondition(int condition) {
-		this.condition = condition;
-	}
 	
 	public int getMental() {
 		return mental;
 	}
 	public void setMental(int mental) {
 		this.mental = mental;
-	}
-	
-	
-	
-	public int getAchievement() {
-		return achievement;
-	}
-	public void setAchievement(int achievement) {
-		this.achievement = achievement;
 	}
 	
 	public String getMemo() {
@@ -115,13 +98,6 @@ public class Condition {
 		this.id = id;
 	}
 	
-	public boolean isNewCondition() {
-		return newCondition;
-	}
-	public void setNewCondition(boolean newCondition) {
-		this.newCondition = newCondition;
-	}
-
 	public String getUser_name() {
 		return user_name;
 	}

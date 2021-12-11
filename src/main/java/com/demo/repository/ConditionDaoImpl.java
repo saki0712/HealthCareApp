@@ -39,9 +39,9 @@ public class ConditionDaoImpl implements ConditionDao {
 			condition.setId((int)result.get("id"));
 			condition.setUser_name((String)result.get("user_name"));
 			condition.setDay((Date)result.get("day"));
-			condition.setCondition((int)result.get("condition"));
+			//condition.setCondition((int)result.get("condition"));
 			condition.setMental((int)result.get("mental"));
-			condition.setAchievement((int)result.get("achievement"));
+			//condition.setAchievement((int)result.get("achievement"));
 			condition.setMemo((String)result.get("memo"));
 			
 			list.add(condition);
@@ -51,21 +51,21 @@ public class ConditionDaoImpl implements ConditionDao {
 	
 	@Override
 	public void insert(Condition condition) {
-		jdbcTemplate.update("INSERT INTO `condition` (`user_name`, `day`, `condition`, `mental`, `achievement`, `memo`) VALUES(?, ?, ?, ?, ?, ?)"
+		jdbcTemplate.update("INSERT INTO `condition` (`user_name`, `day`, `mental`, `memo`) VALUES(?, ?, ?, ?)"
 				+" ON DUPLICATE KEY UPDATE"
 			    +" `day` = VALUES(`day`)"
-			    +", `condition` = VALUES(`condition`)"
+			    //+", `condition` = VALUES(`condition`)"
 			    +", `mental` = VALUES(`mental`)"
-			    +", `achievement` = VALUES(`achievement`)"
+			    //+", `achievement` = VALUES(`achievement`)"
 			    +", `memo` = VALUES(`memo`);"
 ,
-				condition.getUser_name(), condition.getDay(), condition.getCondition(), condition.getMental(), condition.getAchievement(), condition.getMemo());		
+				condition.getUser_name(), condition.getDay(), condition.getMental(), condition.getMemo());		
 	}
 
 	@Override
 	public int update(Condition condition) {
-		return jdbcTemplate.update("UPDATE `condition` SET day = ?, `condition` = ?, mental = ?, achievement = ?, memo = ? WHERE id = ?;",
-				condition.getDay(), condition.getCondition(), condition.getMental(), condition.getAchievement(), condition.getMemo(), condition.getId());		
+		return jdbcTemplate.update("UPDATE `condition` SET day = ?, mental = ?, memo = ? WHERE id = ?;",
+				condition.getDay(), condition.getMental(), condition.getMemo(), condition.getId());		
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class ConditionDaoImpl implements ConditionDao {
 
 	@Override
 	public Optional<Condition> findById(int id) {
-		String sql = "SELECT id, user_name, day, `condition`, mental, achievement, memo "
+		String sql = "SELECT id, user_name, day, mental, memo "
 				+ "FROM `condition` "
 				+ "WHERE id = ?;";
 
@@ -86,9 +86,9 @@ public class ConditionDaoImpl implements ConditionDao {
 		condition.setId((int)result.get("id"));
 		condition.setUser_name((String)result.get("user_name"));
 		condition.setDay((Date) result.get("day"));
-		condition.setCondition((int)result.get("condition"));
+		//condition.setCondition((int)result.get("condition"));
 		condition.setMental((int)result.get("mental"));
-		condition.setAchievement((int)result.get("achievement"));
+		//condition.setAchievement((int)result.get("achievement"));
 		condition.setMemo((String) result.get("memo"));
 
 		//conditionをOptionalでラップする
@@ -109,9 +109,9 @@ public class ConditionDaoImpl implements ConditionDao {
 			condition.setUser_name((String)result.get("user_name"));
 //			System.out.println(condition.getUser_name());
 			condition.setDay((Date)result.get("day"));
-			condition.setCondition((int)result.get("condition"));
+			//condition.setCondition((int)result.get("condition"));
 			condition.setMental((int)result.get("mental"));
-			condition.setAchievement((int)result.get("achievement"));
+			//condition.setAchievement((int)result.get("achievement"));
 			condition.setMemo((String)result.get("memo"));
 			
 			list.add(condition);

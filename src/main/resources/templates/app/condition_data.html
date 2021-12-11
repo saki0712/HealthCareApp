@@ -31,7 +31,7 @@
 	                <ul class="navbar-nav mx-auto">
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/}">HOME</a></li>
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/insert}">モチベ登録</a></li>
-	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ詳細</a></li>
+	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ記録</a></li>
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/graph}">モチベグラフ</a></li>
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/photos}">アルバム写真</a></li>
 	                    <li class="nav-item px-lg-4"><form class="nav-link text-uppercase" th:action="@{/logout}" method="post"><input type="submit" value="Logout" /></form></li>
@@ -39,34 +39,35 @@
 	            </div>
 	        </div>
 	    </nav>
-	<h1 th:text="${title}">Hello</h1>
-	
-	<form method="GET" th:action="@{/condition/search}" th:object="${condition}">
-		<label>日付検索</label>
-		<input type="date" name="date_from">から
-		<input type="date" name="date_to">まで
-		<input type="submit" value="検索">
-	</form>
-	
-	<table>
-	<tr th:each="obj : ${list}">
-		<td th:text=${obj.day}></td>
-		<!-- 3==great　2==good　1==bad -->
-		<td th:if="${obj.condition == 3}"><i class="far fa-smile-beam"></i></td>
-		<td th:if="${obj.condition == 2}"><i class="far fa-smile"></i></td>
-		<td th:if="${obj.condition == 1}"><i class="far fa-angry"></i></td>
-		
-		<td th:if="${obj.mental == 3}"><i class="far fa-smile-beam"></i></td>
-		<td th:if="${obj.mental == 2}"><i class="far fa-smile"></i></td>
-		<td th:if="${obj.mental == 1}"><i class="far fa-angry"></i></td>
-		
-		<td th:if="${obj.achievement == 3}"><i class="far fa-smile-beam"></i></td>
-		<td th:if="${obj.achievement == 2}"><i class="far fa-smile"></i></td>
-		<td th:if="${obj.achievement == 1}"><i class="far fa-angry"></i></td>
-		
-		<td th:text=${obj.memo}></td>
-		<td><a type="button" th:href="@{/condition/{id}(id=${obj.id})}">詳細</a></td>
-	</tr>
-</table>
-</body>
+	    <section class="page-section cta">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 mx-auto">
+                        <div class="cta-inner bg-faded text-center rounded">
+                            <h2 class="section-heading mb-5">
+                                <span class="section-heading-lower">モチベ記録</span>
+                            </h2>
+							<form method="GET" th:action="@{/condition/search}" th:object="${condition}">
+								<label>日付検索</label>
+								<input type="date" name="date_from">から
+								<input type="date" name="date_to">まで
+								<input type="submit" value="検索">
+							</form>
+							<table class="list-unstyled list-hours mb-5 text-left mx-auto">
+								<tr class="list-unstyled-item list-hours-item d-flex" th:each="obj : ${list}">
+									<td class="ms-auto" th:text=${obj.day}></td>
+									<td th:if="${obj.mental == 3}"><i class="far fa-smile-beam"></i></td>
+									<td th:if="${obj.mental == 2}"><i class="far fa-smile"></i></td>
+									<td th:if="${obj.mental == 1}"><i class="far fa-angry"></i></td>
+									
+									<td th:text=${obj.memo}></td>
+									<td><a type="button" th:href="@{/condition/{id}(id=${obj.id})}">詳細</a></td>
+								</tr>
+						    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>

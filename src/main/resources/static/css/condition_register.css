@@ -66,10 +66,10 @@ h2 {
 }
 /* 選択時のスタイル（要素毎に色を変更） */
 .radio-select li:nth-child(1) input[type="radio"]:checked + label + .choice-btn {
-	background: #FBFFB9;
+	background: #b9e2ff;
 }
 .radio-select li:nth-child(2) input[type="radio"]:checked + label + .choice-btn {
-	background: #D3F8E2;
+	background: #d5ffb9;
 }
 .radio-select li:nth-child(3) input[type="radio"]:checked + label + .choice-btn {
 	background: #EEC0C6;

@@ -47,76 +47,23 @@
 		th:object="${condition}">
 		<h2>日付</h2> <input type="date" name="day" th:value="*{day}" />
 
-		<h2>体調</h2>
-
-			<ul class="radio-select">
-				<li>
-					<input type="radio" id="great" name="condition" value="3"/> 
-					<label for="great"></label>
-					<div class="choice-btn"><i class="far fa-smile-beam"></i></div>
-					<p>SMILE</p>
-				</li>
-				<li>
-					<input type="radio" id="good" name="condition" value="2"/>
-					<label for="good"></label>
-					<div class="choice-btn"><i class="far fa-smile"></i></div>
-					<p>NORMAL</p>
-				</li>
-				<li>
-					<input type="radio" id="bad" name="condition" value="1"/>
-					<label for="bad"></label>
-					<div class="choice-btn"><i class="far fa-angry"></i></div>
-					<p>ANGRY</p>
-				</li>
-		    </ul>
-			<br>
-			<div th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}"></div>
-
-		<h2>メンタル</h2>
-
-			<ul class="radio-select">
-				<li>
-					<input type="radio" id="m_great" name="mental" value="3"/>
-					<label for="m_great"></label>
-					<div class="choice-btn"><i class="far fa-smile-beam"></i></div>
-					<p>SMILE</p>
-				</li>
-				<li>
-					<input type="radio" id="m_good" name="mental" value="2"/>
-					<label for="m_good"></label>
-					<div class="choice-btn"><i class="far fa-smile"></i></div>
-					<p>NORMAL</p>
-				</li>
-				<li>
-					<input type="radio" id="m_bad" name="mental" value="1"/>
-					<label for="m_bad"></label>
-					<div class="choice-btn"><i class="far fa-angry"></i></div>
-					<p>ANGRY</p>
-				</li>
-			</ul>
-		
-			<br>
-			<div th:if="${#fields.hasErrors('mental')}" th:errors="*{mental}"></div>
-
-
-
-		<h2>1日の達成感</h2> 
+		<h2>モチベーション</h2> 
 		
 			<ul class="radio-select">
 				<li>
-					<input type="radio" id="a_great" name="achievement" value="3"/>
+					<input type="radio" id="a_great" name="mental" value="3"/>
 					<label for="a_great"></label>
 					<div class="choice-btn"><i class="far fa-smile-beam"></i></div>
 					<p>SMILE</p>
 				</li>
 				<li>
-					<input type="radio" id="a_good" name="achievement" value="2"/>
+					<input type="radio" id="a_good" name="mental" value="2"/>
 					<label for="a_good"></label>
 					<div class="choice-btn"><i class="far fa-smile"></i></div>
 					<p>NORMAL</p>
 				</li>
 				<li>
-					<input type="radio" id="a_bad" name="achievement" value="1"/>
+					<input type="radio" id="a_bad" name="mental" value="1"/>
 					<label for="a_bad"></label>
 					<div class="choice-btn"><i class="far fa-angry"></i></div>
 					<p>ANGRY</p>
@@ -124,10 +71,10 @@
 			</ul>
 			
 			<br>
-			<div th:if="${#fields.hasErrors('achievement')}" th:errors="*{achievement}"></div>
+			<div th:if="${#fields.hasErrors('mental')}" th:errors="*{mental}"></div>
 		
-		<h2>メモ(200字以内)：</h2> <input type="text" name="memo"
-			th:value="*{memo}" /><br>
+		<h2>メモ(200字以内)：</h2>
+		  <textarea name="memo" th:value="*{memo}" cols="25" rows="8"></textarea>
 		<div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}"></div>
 
 		<br>	

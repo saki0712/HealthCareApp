@@ -39,66 +39,70 @@
                 </div>
             </div>
         </nav>
-	
-	<form method="GET" th:action="@{/condition/graph}" th:object="${condition}">
-		<label>日付検索</label>
-		<input type="date" name="graph_from">から
-		<input type="date" name="graph_to">まで
-		<input type="submit" value="検索">
-	</form>
-	
-	<p>グラフ</p>
-	
-	<!--  <a type="button" th:href="@{/condition/{id}(id=${obj.id})}">編集</a> -->
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-	<canvas id="mentalChart"></canvas>
-	<script type="text/javascript" th:inline="javascript">
-	
-	/*<![CDATA[*/
- 	var ctx = document.getElementById("mentalChart").getContext('2d');
- 	var mentalChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            // コントローラーで格納したdayを変数式で取り出す
-            labels: /*[[${day}]]*/ 'day',
-            datasets: [
-                {
-                    label: "Mental History",
-                    borderColor: 'rgb(255, 0, 0)',
-                    lineTension: 0, //直線
-                    fill: false, //グラフとＸ軸の間を塗らない
-                    // 上記と同様、mentalを変数式で取り出す
-                    data: /*[[${mental}]]*/ 'mental',
-                },
-            ]
-        },
-        options: {
-        	scales: {
-                yAxes: [
-                    {
-			        	ticks: {           // Ｙ軸目盛り        
-			                min: 1,            // 最小値
-			                max: 3,           // 最大値
-			                stepSize: 1,       // 間隔
-               			//	fontColor: "blue"  // 色
-			        	}
-		            }
-	            ]
-             },
-             
-            responsive: true,
-        }
-    });
- 	
-    document.getElementById('mentalChart').addEventListener('click', e => {
-        const elements = chart.getElementAtEvent(e);
-        if (elements.length) {
-          alert(`${elements[0]._index}: ${elements[0]._model.label}`);
-        }
-      });
- 	/*]]>*/
-    
-    </script>
-</body>
+        <section class="page-section cta">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 mx-auto">
+                        <div class="cta-inner bg-faded text-center rounded">
+                            <h2 class="section-heading mb-5">
+                                <span class="section-heading-lower">モチベーショングラフ</span>
+                            </h2>
+                            <form method="GET" th:action="@{/condition/graph}" th:object="${condition}">
+                                <label>日付検索</label>
+                                <input type="date" name="graph_from">から
+                                <input type="date" name="graph_to">まで
+                                <input type="submit" value="検索">
+                            </form>
+        
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+							<canvas id="mentalChart"></canvas>
+							<script type="text/javascript" th:inline="javascript">
+					        /*<![CDATA[*/
+						        var ctx = document.getElementById("mentalChart").getContext('2d');
+						        var mentalChart = new Chart(ctx, {
+						            type: 'line',
+						            data: {
+						                // コントローラーで格納したdayを変数式で取り出す
+						                labels: /*[[${day}]]*/ 'day',
+						                datasets: [
+						                    {
+						                        label: "Motivation History",
+						                        borderColor: 'rgb(255, 0, 0)',
+						                        lineTension: 0, //直線
+						                        fill: false, //グラフとＸ軸の間を塗らない
+						                        // 上記と同様、mentalを変数式で取り出す
+						                        data: /*[[${mental}]]*/ 'mental',
+						                    },
+						                ]
+						            },
+						            options: {
+						                scales: {
+						                    yAxes: [
+						                        {
+						                            ticks: {           // Ｙ軸目盛り        
+						                                min: 1,            // 最小値
+						                                max: 3,           // 最大値
+						                                stepSize: 1,       // 間隔
+						                                //	fontColor: "blue"  // 色
+						                            }
+						                        }
+						                    ]
+						                },
+						                
+						                responsive: true,
+						            }
+						        });
+						
+							        /* 日付け押下で詳細画面に遷移 or 日記を表示
+							           th:href="@{/condition/{id}(id=${obj.id})}"
+							        */
+						        
+					        /*]]>*/
+                            </script>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+    </body>
 </html>
