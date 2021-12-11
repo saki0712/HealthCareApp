@@ -55,17 +55,17 @@
 	                               <h2 class="register_field">モチベーション</h2>
 	                                   <ul class="radio-select">
 	                                       <li>
-	                                           <input type="radio" id="a_great" name="mental" value="3"/>
+	                                           <input type="radio" id="a_great" name="mental" value="3" th:field="*{mental}"/>
 	                                           <label for="a_great"></label>
 	                                           <div class="choice-btn"><i class="far fa-smile-beam"></i></div>
 	                                       </li>
                                            <li>
-                                               <input type="radio" id="a_good" name="mental" value="2"/>
+                                               <input type="radio" id="a_good" name="mental" value="2" th:field="*{mental}"/>
                                                <label for="a_good"></label>
                                                <div class="choice-btn"><i class="far fa-smile"></i></div>
                                            </li>
                                            <li>
-                                               <input type="radio" id="a_bad" name="mental" value="1"/>
+                                               <input type="radio" id="a_bad" name="mental" value="1" th:field="*{mental}"/>
                                                <label for="a_bad"></label>
                                                <div class="choice-btn"><i class="far fa-angry"></i></div>
                                            </li>
@@ -73,7 +73,7 @@
                                         <font color="RED"><div th:if="${#fields.hasErrors('mental')}" th:errors="*{mental}"></div></font>
                                 
                                   <h2 class="register_field">日記(200字以内)：</h2>
-                                        <textarea class="memo_area"name="memo" th:value="*{memo}" cols="33" rows="8"></textarea>
+                                        <textarea class="memo_area" name="memo" th:value="*{memo}" th:field="*{memo}" cols="33" rows="8"></textarea>
                                         <font color="RED"><div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}"></div></font>
                                    
                                   <div class="intro-button mx-auto">

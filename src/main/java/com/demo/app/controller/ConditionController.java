@@ -74,7 +74,6 @@ public class ConditionController {
             return "redirect:/condition/graph";
         } else {
         	//エラーの場合
-//        	condition.setNewCondition(true);
             model.addAttribute("condition", condition);
             return "app/condition_register";
         }
@@ -120,14 +119,13 @@ public class ConditionController {
 
         	//更新処理、フラッシュスコープの使用、リダイレクト（個々の編集ページ）
         	conditionService.update(condition);
-        	redirectAttributes.addFlashAttribute("complete", "更新しました");
+        	redirectAttributes.addFlashAttribute("complete", "更新しました！");
             return "redirect:/condition/" + id;
         } else {
         	//エラーの場合
         	model.addAttribute("condition", condition);
         	model.addAttribute("id", id);
-        	model.addAttribute("title", "更新");
-        	return "app/condition_register";
+        	return "app/condition_details";
         }
     }
     

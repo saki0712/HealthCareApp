@@ -19,7 +19,7 @@ public class Condition {
 	*/
 	
 	@Digits(integer = 1, fraction = 0)
-	@NotNull (message = "内容を入力してください。")
+	@NotNull(message = "モチベーションレベルを選択してください")
 	private int mental;
 	
 	/* 今後使うかもしれない

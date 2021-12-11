@@ -99,7 +99,7 @@ public class ConditionDaoImpl implements ConditionDao {
 
 	@Override
 	public List<Condition> findByDate(String date_from, String date_to, String user_name){
-		String sql  = "SELECT * FROM `condition` WHERE day BETWEEN \"" + date_from + "\" AND \"" + date_to + "\" AND `condition`.user_name LIKE \"" + user_name + "\";";
+		String sql  = "SELECT * FROM `condition` WHERE day BETWEEN \"" + date_from + "\" AND \"" + date_to + "\" AND `condition`.user_name LIKE \"" + user_name + "\" ORDER BY `day` ASC;";
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
 //		System.out.println(sql);
 		List<Condition> list = new ArrayList<Condition>();
