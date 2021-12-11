@@ -2,14 +2,18 @@ package com.demo.entity;
 
 import java.sql.Date;
 
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Condition {
 
 	private int id;
 	private String user_name;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@NotNull(message = "日付を入力してください")
 	private Date day;
 	
 	/* 今後使うかもしれない
@@ -18,9 +22,8 @@ public class Condition {
 	private int condition;
 	*/
 	
-	@Digits(integer = 1, fraction = 0)
 	@NotNull(message = "モチベーションレベルを選択してください")
-	private int mental;
+	private Integer mental;
 	
 	/* 今後使うかもしれない
 	@Digits(integer = 1, fraction = 0)
@@ -63,10 +66,10 @@ public class Condition {
 	public Condition() {
 	}
 	
-	public int getMental() {
+	public Integer getMental() {
 		return mental;
 	}
-	public void setMental(int mental) {
+	public void setMental(Integer mental) {
 		this.mental = mental;
 	}
 	

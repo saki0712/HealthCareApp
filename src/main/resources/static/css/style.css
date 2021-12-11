@@ -11355,6 +11355,7 @@ p {
   padding-bottom: 1.5rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  margin-top: 16px;
 }
 
 #mainNav {
@@ -11499,6 +11500,6 @@ p {
 	margin: 2rem;
 }
 
-.memo_area {
-	margin-bottom: 2rem;
+.input_area {
+	margin-bottom: 16px;
 }
