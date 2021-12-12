@@ -1,6 +1,6 @@
 package com.demo.entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +14,7 @@ public class Condition {
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@NotNull(message = "日付を入力してください")
-	private Date day;
+	private LocalDate day;
 	
 	/* 今後使うかもしれない
 	@Digits(integer = 1, fraction = 0)
@@ -34,7 +34,7 @@ public class Condition {
 	@Size(min = 1, max = 200, message = "200文字以内で入力してください")
 	private String memo;
     
-	public Condition(int id, String user_name, Date day,int mental, String memo) {
+	public Condition(int id, String user_name, LocalDate day,int mental, String memo) {
 		this.id = id;
 		this.setUser_name(user_name);
 		this.day = day;
@@ -45,7 +45,7 @@ public class Condition {
 	}
 	
 	//コンディション登録
-	public Condition(String user_name, Date day, int condition, int mental, int achievement, String memo) {
+	public Condition(String user_name, LocalDate day, int condition, int mental, int achievement, String memo) {
 		this.user_name = user_name;
 		this.day = day;
 		//this.condition = condition;
@@ -58,7 +58,7 @@ public class Condition {
 	public Condition(int mental) {
 		this.mental = mental;
 	}
-	public Condition(Date day) {
+	public Condition(LocalDate day) {
 		this.day = day;
 	}
 	
@@ -80,10 +80,10 @@ public class Condition {
 		this.memo = memo;
 	}
 	
-	public Date getDay() {
+	public LocalDate getDay() {
 		return day;
 	}
-	public void setDay(Date day) {
+	public void setDay(LocalDate day) {
 		this.day = day;
 	}
 	

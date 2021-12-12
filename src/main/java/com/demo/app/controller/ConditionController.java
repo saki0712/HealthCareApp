@@ -1,8 +1,7 @@
 package com.demo.app.controller;
 
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,8 +52,7 @@ public class ConditionController {
 	@GetMapping("/insert")
 	public String form(Condition condition, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		String user_name = userDetails.getUsername();
-		long miliseconds = System.currentTimeMillis();
-        Date date = new Date(miliseconds);
+		LocalDate date = LocalDate.now();
         condition.setDay(date);	
         model.addAttribute("user_name", user_name); 
 		model.addAttribute("day", date);
@@ -69,21 +66,17 @@ public class ConditionController {
     	@Valid @ModelAttribute Condition condition,
         BindingResult result,
         Model model) {
-
-    	System.out.println(condition.getDay());
-    	System.out.println(condition.getMental());
-
     	
         if (!result.hasErrors()) {
             conditionService.insert(condition);
             return "redirect:/condition/graph";
         } else {
         	//エラーの場合
-        	List<String> errorList = new ArrayList<String>();
-            for (ObjectError error : result.getAllErrors()) {
-            	System.out.println(error.getDefaultMessage());
-                errorList.add(error.getDefaultMessage());
-            }
+//        	List<String> errorList = new ArrayList<String>();
+//            for (ObjectError error : result.getAllErrors()) {
+//            	System.out.println(error.getDefaultMessage());
+//                errorList.add(error.getDefaultMessage());
+//            }
             model.addAttribute("condition", condition);
             return "app/condition_register";
         }

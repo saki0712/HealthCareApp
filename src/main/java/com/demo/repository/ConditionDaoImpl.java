@@ -38,7 +38,7 @@ public class ConditionDaoImpl implements ConditionDao {
 			Condition condition = new Condition();
 			condition.setId((int)result.get("id"));
 			condition.setUser_name((String)result.get("user_name"));
-			condition.setDay((Date)result.get("day"));
+			condition.setDay(((Date) result.get("day")).toLocalDate());
 			//condition.setCondition((int)result.get("condition"));
 			condition.setMental((int)result.get("mental"));
 			//condition.setAchievement((int)result.get("achievement"));
@@ -85,7 +85,7 @@ public class ConditionDaoImpl implements ConditionDao {
 		Condition condition = new Condition();
 		condition.setId((int)result.get("id"));
 		condition.setUser_name((String)result.get("user_name"));
-		condition.setDay((Date) result.get("day"));
+		condition.setDay(((Date) result.get("day")).toLocalDate());
 		//condition.setCondition((int)result.get("condition"));
 		condition.setMental((int)result.get("mental"));
 		//condition.setAchievement((int)result.get("achievement"));
@@ -108,7 +108,7 @@ public class ConditionDaoImpl implements ConditionDao {
 			condition.setId((int)result.get("id"));
 			condition.setUser_name((String)result.get("user_name"));
 //			System.out.println(condition.getUser_name());
-			condition.setDay((Date)result.get("day"));
+			condition.setDay(((Date) result.get("day")).toLocalDate());
 			//condition.setCondition((int)result.get("condition"));
 			condition.setMental((int)result.get("mental"));
 			//condition.setAchievement((int)result.get("achievement"));
