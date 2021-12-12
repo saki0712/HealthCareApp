@@ -47,10 +47,10 @@
                                 <span class="section-heading-lower">Album Photos</span>
                             </h2>
 							<section>
-								<button id="login" onclick="login()" style="display: none;">ログイン</button>
-								<button id="logout" onclick="logout()" style="display: none;">ログアウト</button>
-								<button id="getAlbums" onclick="getAlbums()" style="display: none;">アルバムリストを取得する</button>
-								<button id="getPhotos" onclick="showPhotos()" style="display: none;">アルバムの写真を取得する</button>
+								<button id="login" onclick="login()" style="display: none;">Google Login</button>
+								<button id="logout" onclick="logout()" style="display: none;">Google Logout</button>
+								<button id="getAlbums" onclick="getAlbums()" style="display: none;">Get Albums</button>
+								<button id="getPhotos" onclick="showPhotos()" style="display: none;">PLAY</button>
 							</section>
 
 						    <div id="albums">
@@ -58,7 +58,7 @@
 						        </select>
 						    </div>
 						    <img id="photo" class="rounded mx-auto d-block">
-
+                            
 						    <script defer src="https://apis.google.com/js/api.js"
 						        onload="this.onload=function(){};handleClientLoad()"
 						        onreadystatechange="if (this.readyState === 'complete') this.onload()">
@@ -146,9 +146,19 @@
 							        });
 							    }
 							    
+							    let playingID = 0;
+							    
 							    // 取得したアルバムの写真をスライドショーで表示
 							    function showPhotos() {
-							        setInterval(getPhotos,1000); 
+									if (playingID == 0) {
+									   document.getElementById('getPhotos').innerHTML = 'STOP';
+									   playingID = setInterval(getPhotos, 2000);
+									} else {
+									   document.getElementById('getPhotos').innerHTML = 'START';
+									   clearInterval(playingID);
+									   playingID = 0;
+									}
+									//setInterval(getPhotos,1000); 
 							    }
 							    
 							     // アルバムリスト取得 REST API実行
