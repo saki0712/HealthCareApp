@@ -22,5 +22,7 @@ public interface ConditionDao {
 	List<Condition> findMental(String graph_from, String graph_to, String user_name);
 
 	List<Condition> findDay(String graph_from, String graph_to, String user_name);
+
+	Condition findMemo(String day, String user_name);
 	
 }

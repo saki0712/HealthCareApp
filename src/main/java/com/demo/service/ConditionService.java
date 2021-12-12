@@ -17,8 +17,9 @@ public interface ConditionService {
 	
 	List<Condition> findByDate(String date_from, String date_to, String user_name);
 	
-	//mentalとdayを取得
+	//mentalとdayとmemoを取得
 	List<Condition> findMental(String graph_from, String graph_to, String user_name);
 	List<Condition> findDay(String graph_from, String graph_to, String user_name);
+	Condition findMemo(String day, String user_name);
 	
 }

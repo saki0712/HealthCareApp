@@ -121,7 +121,7 @@ public class ConditionDaoImpl implements ConditionDao {
 
 	@Override
 	public List<Condition> findMental(String graph_from, String graph_to, String user_name) {
-		String sql  = "SELECT mental FROM `condition` WHERE day BETWEEN \"" + graph_from + "\" AND \"" + graph_to + "\" AND `condition`.user_name LIKE \"" + user_name + "\";";
+		String sql  = "SELECT mental FROM `condition` WHERE day BETWEEN \"" + graph_from + "\" AND \"" + graph_to + "\" AND `condition`.user_name LIKE \"" + user_name + "\" ORDER BY `day` ASC;";
 		RowMapper<Condition> rowMapper = new BeanPropertyRowMapper<Condition>(Condition.class);
         List<Condition> MentalList = jdbcTemplate.query(sql, rowMapper);
 		return MentalList;
@@ -133,6 +133,14 @@ public class ConditionDaoImpl implements ConditionDao {
 		RowMapper<Condition> rowMapper = new BeanPropertyRowMapper<Condition>(Condition.class);
         List<Condition> DayList = jdbcTemplate.query(sql, rowMapper);
 		return DayList;
+	}
+
+	@Override
+	public Condition findMemo(String day, String user_name) {
+		String sql  = "SELECT memo FROM `condition` WHERE day = ? AND `condition`.user_name LIKE ?;";
+		RowMapper<Condition> rowMapper = new BeanPropertyRowMapper<Condition>(Condition.class);
+		Condition memo = jdbcTemplate.queryForObject(sql, rowMapper, day, user_name);
+		return memo;
 	}
 
 

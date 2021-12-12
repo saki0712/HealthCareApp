@@ -90,7 +90,7 @@ public class Condition {
 	//グラフ画面にて日付けをStringで表示
 	@Override
 	public String toString() {
-		return "日付:" + day;
+		return day.toString();
 	}
 	
 	public int getId() {

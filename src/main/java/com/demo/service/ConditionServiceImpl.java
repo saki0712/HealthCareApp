@@ -71,5 +71,10 @@ public class ConditionServiceImpl implements ConditionService {
 	public List<Condition> findDay(String graph_from, String graph_to, String user_name) {
 		return dao.findDay(graph_from, graph_to, user_name);
 	}
+
+	@Override
+	public Condition findMemo(String day, String user_name) {
+		return dao.findMemo(day, user_name);
+	}
 	
 }

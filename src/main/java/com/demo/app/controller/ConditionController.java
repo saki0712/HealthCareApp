@@ -1,12 +1,15 @@
 package com.demo.app.controller;
 
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.demo.entity.Condition;
 import com.demo.service.ConditionService;
 import com.demo.service.UserDetailsImpl;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @Controller
 @RequestMapping("/condition")
@@ -37,13 +42,20 @@ public class ConditionController {
     @GetMapping
     public String condition(Condition condition, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
     	String user_name = userDetails.getUsername();
-    	model.addAttribute("user_name", user_name);
+    	//model.addAttribute("user_name", user_name);
 
         //Conditionのリストを取得する
         List<Condition> list = conditionService.findAll(user_name);
-
+        
+        for(int i = 0; i< list.size(); i++) {
+        	List<String> memoList = new ArrayList<String>();
+        	System.out.println(list.get(i));
+        	//String memo = 
+        	//memoList.add(condition.getMemo());        
+    	}
+        
         model.addAttribute("list", list);
-        model.addAttribute("title", user_name + "さんのコンディションデータ");
+        //model.addAttribute("title", user_name + "さんのコンディションデータ");
 
         return "app/condition_data";
     }
@@ -102,7 +114,6 @@ public class ConditionController {
 
         model.addAttribute("condition", condition);
         model.addAttribute("id", id);
-        model.addAttribute("title", "コンディション");
 
         return "app/condition_details";
     }
@@ -199,4 +210,12 @@ public class ConditionController {
 		return "app/photos";
 	}
 	
+	@GetMapping("/memo")
+	@ResponseBody
+	public Condition memo(String day, @AuthenticationPrincipal UserDetailsImpl userDetails) throws JsonParseException, JsonMappingException, IOException {
+		String user_name = userDetails.getUsername();
+		System.out.println(day);
+		Condition memo = conditionService.findMemo(day, user_name);
+		return memo;
+	}
 }

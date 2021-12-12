@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <head>
         <meta charset="utf-8" />
@@ -53,51 +53,86 @@
                                 <input type="date" name="graph_to">まで
                                 <input type="submit" value="検索">
                             </form>
-        
-							<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-							<canvas id="mentalChart"></canvas>
-							<script type="text/javascript" th:inline="javascript">
-					        /*<![CDATA[*/
-						        var ctx = document.getElementById("mentalChart").getContext('2d');
-						        var mentalChart = new Chart(ctx, {
-						            type: 'line',
-						            data: {
-						                // コントローラーで格納したdayを変数式で取り出す
-						                labels: /*[[${day}]]*/ 'day',
-						                datasets: [
-						                    {
-						                        label: "Motivation History",
-						                        borderColor: 'rgb(255, 0, 0)',
-						                        lineTension: 0, //直線
-						                        fill: false, //グラフとＸ軸の間を塗らない
-						                        // 上記と同様、mentalを変数式で取り出す
-						                        data: /*[[${mental}]]*/ 'mental',
-						                    },
-						                ]
-						            },
-						            options: {
-						                scales: {
-						                    yAxes: [
-						                        {
-						                            ticks: {           // Ｙ軸目盛り        
-						                                min: 1,            // 最小値
-						                                max: 3,           // 最大値
-						                                stepSize: 1,       // 間隔
-						                                //	fontColor: "blue"  // 色
-						                            }
-						                        }
-						                    ]
-						                },
-						                
-						                responsive: true,
-						            }
-						        });
-						
-							        /* 日付け押下で詳細画面に遷移 or 日記を表示
-							           th:href="@{/condition/{id}(id=${obj.id})}"
-							        */
-						        
-					        /*]]>*/
+                            
+                            <script th:src="@{/js/jquery.min.js}"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"></script>
+                            <canvas id="mentalChart"></canvas>
+                            <script type="text/javascript" th:inline="javascript">
+                            /*<![CDATA[*/
+                                var ctx = document.getElementById("mentalChart").getContext('2d');
+                                var mentalChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        // コントローラーで格納したdayを変数式で取り出す
+                                        labels: /*[[${day}]]*/ 'day',
+                                        datasets: [
+                                            {
+                                                label: "Motivation",
+                                                borderColor: 'rgb(255, 0, 0)',
+                                                lineTension: 0, //直線
+                                                fill: false, //グラフとＸ軸の間を塗らない
+                                                // 上記と同様、mentalを変数式で取り出す
+                                                data: /*[[${mental}]]*/ 'mental',
+                                            },
+                                        ]
+                                    },
+                                    options: {
+                                        scales: {
+                                            yAxes: [
+                                                {
+                                                    ticks: {           // Ｙ軸目盛り        
+                                                        min: 1,            // 最小値
+                                                        max: 3,           // 最大値
+                                                        stepSize: 1,       // 間隔
+                                                        //  fontColor: "blue"  // 色
+                                                    }
+                                                }
+                                            ]
+                                        },  
+                                        plugins: {
+                                            tooltip: {
+                                                enabled: true,
+                                                mode: 'nearest'
+                                              }
+                                            },
+                                        
+                                        responsive: true,
+                                    }
+                                });
+                                
+                                const ctx2 = document.getElementById('mentalChart')
+                                
+                                function dayClick(click) {
+                                	const points = mentalChart.getElementsAtEventForMode(click, 'nearest', { intersect: true }, true);
+                                	if(points.length) {
+                                		const firstPoint = points[0];
+                                		/* console.log(firstPoint); */
+                                		const value = mentalChart.data.labels[firstPoint.index];
+                                		console.log(value);
+	                               		var day = {"day": value};
+	                               	    $.ajax({
+	                               	        type        : "GET",
+	                               	        url         : "/condition/memo",
+	                               	        data        :day,
+	                               	        dataType    : "json"
+	                               	    }).done(function (results) {
+	                                        // 通信成功
+	                                        alert(JSON.stringify(results.memo));
+	                                    }).fail(function (jqXHR, textStatus, errorThrown) {
+	                                        // 通信失敗
+	                                        alert('error');
+	                                        console.log("ajax通信に失敗しました");
+	                                        console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
+	                                        console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
+	                                        console.log("errorThrown    : " + errorThrown.message); // 例外情報
+	                                        console.log("URL            : " + url);
+	                                    });
+	                               	}
+                               }
+                                  
+                               ctx2.onclick = dayClick;
+                                    
+                            /*]]>*/
                             </script>
                         </div>
                     </div>
