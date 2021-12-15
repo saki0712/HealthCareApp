@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Motivation Support</title>
-        <link rel="icon" type="image/x-icon" href="img/heartlogo.png" />
+        <link rel="icon" type="image/x-icon" th:href="@{/img/heartlogo.png}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -19,7 +19,7 @@
     <body>
         <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
-                <span class="site-heading-upper text-primary mb-3">Have A Bird's-eye view of Your Motivation</span>
+                <span class="site-heading-upper text-purple mb-3">Have A Bird's-eye view of Your Motivation</span>
                 <span class="site-heading-lower">Motivation Support</span>
             </h1>
         </header>
@@ -30,7 +30,7 @@
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/}">HOME</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/insert}">モチベ登録</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ記録</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ履歴</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/graph}">モチベグラフ</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/photos}">アルバム写真</a></li>
                         <li class="nav-item px-lg-4"><form class="nav-link text-uppercase" th:action="@{/logout}" method="post"><input type="submit" value="Logout" /></form></li>
@@ -44,13 +44,13 @@
                     <div class="col-xl-9 mx-auto">
                         <div class="cta-inner bg-faded text-center rounded">
                             <h2 class="section-heading mb-5">
-                                <span class="section-heading-lower">Album Photos</span>
+                                <span class="section-heading-lower">今日の推しは？</span>
                             </h2>
 							<section>
-								<button id="login" onclick="login()" style="display: none;">Google Login</button>
-								<button id="logout" onclick="logout()" style="display: none;">Google Logout</button>
-								<button id="getAlbums" onclick="getAlbums()" style="display: none;">Get Albums</button>
-								<button id="getPhotos" onclick="showPhotos()" style="display: none;">PLAY</button>
+								<button id="login" onclick="login()" style="display: none;">ログイン</button>
+								<button id="logout" onclick="logout()" style="display: none;">ログアウト</button>
+								<button id="getAlbums" onclick="getAlbums()" style="display: none;">アルバムを取得</button>
+								<button id="getPhotos" onclick="showPhotos()" style="display: none;">再生</button>
 							</section>
 
 						    <div id="albums">
@@ -151,10 +151,10 @@
 							    // 取得したアルバムの写真をスライドショーで表示
 							    function showPhotos() {
 									if (playingID == 0) {
-									   document.getElementById('getPhotos').innerHTML = 'STOP';
-									   playingID = setInterval(getPhotos, 2000);
+									   document.getElementById('getPhotos').innerHTML = '一時停止';
+									   playingID = setInterval(getPhotos, 3000);
 									} else {
-									   document.getElementById('getPhotos').innerHTML = 'START';
+									   document.getElementById('getPhotos').innerHTML = '再生';
 									   clearInterval(playingID);
 									   playingID = 0;
 									}
@@ -235,7 +235,6 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+
 </body>
 </html>

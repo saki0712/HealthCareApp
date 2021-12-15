@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>モチベ登録</title>
-        <link rel="icon" type="image/x-icon" href="img/heartlogo.png" />
+        <link rel="icon" type="image/x-icon" th:href="@{/img/heartlogo.png}" />
         <!-- Font Awesome icons (free version)-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
         <!-- Google fonts-->
@@ -20,7 +20,7 @@
     <body>
 	    <header>
 	        <h1 class="site-heading text-center text-faded d-none d-lg-block">
-	            <span class="site-heading-upper text-primary mb-3">Have A Bird's-eye view of Your Motivation</span>
+	            <span class="site-heading-upper text-purple mb-3">Have A Bird's-eye view of Your Motivation</span>
 	            <span class="site-heading-lower">Motivation Support</span>
 	        </h1>
 	    </header>
@@ -31,7 +31,7 @@
 	                <ul class="navbar-nav mx-auto">
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/}">HOME</a></li>
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/insert}">モチベ登録</a></li>
-	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ記録</a></li>
+	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ履歴</a></li>
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/graph}">モチベグラフ</a></li>
 	                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/photos}">アルバム写真</a></li>
 	                    <li class="nav-item px-lg-4"><form class="nav-link text-uppercase" th:action="@{/logout}" method="post"><input type="submit" value="Logout" /></form></li>
@@ -93,8 +93,5 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-
 </body>
 </html>

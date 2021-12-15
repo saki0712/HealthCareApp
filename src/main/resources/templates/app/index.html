@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Motivation Support</title>
-        <link rel="icon" type="image/x-icon" href="img/heartlogo.png" />
+        <link rel="icon" type="image/x-icon" th:href="@{/img/heartlogo.png}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -19,7 +19,7 @@
     <body>
 		<header>
 		    <h1 class="site-heading text-center text-faded d-none d-lg-block">
-		        <span class="site-heading-upper text-primary mb-3">Have A Bird's-eye view of Your Motivation</span>
+		        <span class="site-heading-upper text-purple mb-3">Have A Bird's-eye view of Your Motivation</span>
 		        <span class="site-heading-lower">Motivation Support</span>
 		    </h1>
 		</header>
@@ -30,7 +30,7 @@
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/}">HOME</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/insert}">モチベ登録</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ記録</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ履歴</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/graph}">モチベグラフ</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/photos}">アルバム写真</a></li>
                         <li class="nav-item px-lg-4"><form class="nav-link text-uppercase" th:action="@{/logout}" method="post"><input type="submit" value="Logout" /></form></li>
@@ -60,9 +60,9 @@
                         <div class="cta-inner bg-faded text-center rounded">
                             <h2 class="section-heading mb-4">
                                 <span class="section-heading-upper">これでモチベアップ！</span>
-                                <span class="section-heading-lower">アルバムの写真で心を潤す</span>
+                                <span class="section-heading-lower">ランダムな推しの写真で心を潤す</span>
                             </h2>
-                            <p class="mb-0">お気に入りの写真を見返す時間が無いなって思ったんです。家族の写真とか推しの写真とか、たくさんアルバムに保存してあるのに。見たら心が休まりますよね？自分の記録を付けたついでに見ちゃいましょう！ランダムで表示されるので写真がたくさんあっても毎日違う推しの姿を拝めるのです。</p>
+                            <p class="mb-0">お気に入りの写真を見返す時間ありますか？家族の写真とか推しの写真とか、たくさんアルバムに保存してあるのに。見たら心が休まりますよね？自分の記録を付けたついでに見ちゃいましょう！ランダムで表示されるので写真がたくさんあっても毎日違う推しの姿を拝めるのです。</p>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,5 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
     </body>
 </html>
