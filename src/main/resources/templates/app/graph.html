@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
+
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -17,6 +18,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link th:href="@{/css/style.css}" rel="stylesheet" />
     </head>
+
     <body>
         <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
@@ -31,10 +33,13 @@
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/}">HOME</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/insert}">モチベ登録</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ履歴</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ履歴</a>
+                        </li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/graph}">モチベグラフ</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/photos}">アルバム写真</a></li>
-                        <li class="nav-item px-lg-4"><form class="nav-link text-uppercase" th:action="@{/logout}" method="post"><input type="submit" value="Logout" /></form></li>
+                        <li class="nav-item px-lg-4">
+                            <form class="nav-link text-uppercase" th:action="@{/logout}" method="post"><input type="submit" value="Logout" /></form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -53,95 +58,100 @@
                                 <input type="date" name="graph_to">まで
                                 <input type="submit" value="検索">
                             </form>
-                            
+
                             <script th:src="@{/js/jquery.min.js}"></script>
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"></script>
                             <canvas id="mentalChart"></canvas>
                             <script type="text/javascript" th:inline="javascript">
-                            /*<![CDATA[*/
+                                /*<![CDATA[*/
                                 var ctx = document.getElementById("mentalChart").getContext('2d');
                                 var mentalChart = new Chart(ctx, {
                                     type: 'line',
                                     data: {
                                         // コントローラーで格納したdayを変数式で取り出す
                                         labels: /*[[${day}]]*/ 'day',
-                                        datasets: [
-                                            {
-                                                label: "Motivation",
-                                                borderColor: 'rgb(255, 0, 0)',
-                                                lineTension: 0, //直線
-                                                fill: false, //グラフとＸ軸の間を塗らない
-                                                // 上記と同様、mentalを変数式で取り出す
-                                                data: /*[[${mental}]]*/ 'mental',
-                                            },
-                                        ]
+                                        datasets: [{
+                                            label: "Motivation",
+                                            borderColor: 'rgb(255, 0, 0)',
+                                            lineTension: 0, //直線
+                                            fill: false, //グラフとＸ軸の間を塗らない
+                                            // 上記と同様、mentalを変数式で取り出す
+                                            data: /*[[${mental}]]*/ 'mental',
+                                        }, ]
                                     },
                                     options: {
                                         scales: {
-                                             y:{
-                                                 ticks: {           // Ｙ軸目盛り        
-                                                     min: 1,            // 最小値
-                                                     max: 3,           // 最大値
-                                                     stepSize: 1,       // 間隔
-                                                     //  fontColor: "blue"  // 色
-                                                 }
+                                            y: {
+                                                ticks: { // Ｙ軸目盛り        
+                                                    min: 1, // 最小値
+                                                    max: 3, // 最大値
+                                                    stepSize: 1, // 間隔
+                                                    //  fontColor: "blue"  // 色
                                                 }
-                                            
-                                    },  
+                                            }
+
+                                        },
                                         plugins: {
                                             tooltip: {
                                                 enabled: true,
                                                 mode: 'nearest'
-                                              }
-                                            },
-                                        
+                                            }
+                                        },
+
                                         responsive: true,
                                     }
                                 });
-                                
+
                                 const ctx2 = document.getElementById('mentalChart')
-                                
+
                                 function dayClick(click) {
-                                	const points = mentalChart.getElementsAtEventForMode(click, 'nearest', { intersect: true }, true);
-                                	if(points.length) {
-                                		const firstPoint = points[0];
-                                		/* console.log(firstPoint); */
-                                		const value = mentalChart.data.labels[firstPoint.index];
-                                		/*console.log(value);*/
-	                               		var day = {"day": value};
-	                               	    $.ajax({
-	                               	        type        : "GET",
-	                               	        url         : "/condition/memo",
-	                               	        data        :day,
-	                               	        dataType    : "json"
-	                               	    }).done(function (results) {
-	                                        // 通信成功
-	                                        alert(JSON.stringify(results.memo));
-	                                    }).fail(function (jqXHR, textStatus, errorThrown) {
-	                                        // 通信失敗
-	                                        alert('error');
-	                                        console.log("ajax通信に失敗しました");
-	                                        console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
-	                                        console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
-	                                        console.log("errorThrown    : " + errorThrown.message); // 例外情報
-	                                        console.log("URL            : " + url);
-	                                    });
-	                            }
-                               }
-                                  
-                               ctx2.onclick = dayClick;
-                                    
-                            /*]]>*/
+                                    const points = mentalChart.getElementsAtEventForMode(click, 'nearest', {
+                                        intersect: true
+                                    }, true);
+                                    if (points.length) {
+                                        const firstPoint = points[0];
+                                        /* console.log(firstPoint); */
+                                        const value = mentalChart.data.labels[firstPoint.index];
+                                        /*console.log(value);*/
+                                        var day = {
+                                            "day": value
+                                        };
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "/condition/memo",
+                                            data: day,
+                                            dataType: "json"
+                                        }).done(function(results) {
+                                            // 通信成功
+                                            alert(JSON.stringify(results.memo));
+                                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                                            // 通信失敗
+                                            alert('error');
+                                            console.log("ajax通信に失敗しました");
+                                            console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
+                                            console.log("textStatus     : " + textStatus); // タイムアウト、パースエラー
+                                            console.log("errorThrown    : " + errorThrown.message); // 例外情報
+                                            console.log("URL            : " + url);
+                                        });
+                                    }
+                                }
+
+                                ctx2.onclick = dayClick;
+
+                                /*]]>*/
                             </script>
                         </div>
                     </div>
                 </div>
-             </div>
+            </div>
         </section>
         <footer class="footer text-faded text-center py-5">
-            <div class="container"><p class="m-0 small">Copyright &copy; Saki Tanaka 2021</p></div>
+            <div class="container">
+                <p class="m-0 small">Copyright &copy; Saki Tanaka 2021</p>
+            </div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
+
 </html>

@@ -1,59 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author"
-	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-<meta name="generator" content="Hugo 0.88.1">
-<title>Signup</title>
-<link rel="icon" type="image/x-icon" th:href="@{/img/heartlogo.png}" />
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Signup</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/heartlogo.png}" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
 
 
 
-<!-- Bootstrap core CSS -->
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-<!-- Custom styles for this template -->
-<link th:href="@{/css/signin.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
 </head>
+
 <body class="text-center">
 
-	<main class="form-signin">
-		<form method="post" th:action="@{/signup}" th:object="${signupForm}">
-			<div th:if="${signupError}">
-				<div th:text="${signupError}"></div>
-			</div>
+    <main class="form-signin">
+        <form method="post" th:action="@{/signup}" th:object="${signupForm}">
+            <div th:if="${signupError}">
+                <div th:text="${signupError}"></div>
+            </div>
 
-			<h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+            <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
 
-			<div class="form-floating">
-				<input type="text" class="form-control" id="username"
-					name="username" placeholder="Username"
-					th:value="${signupForm.username}"> <label
-					for="floatingInput">Username</label>
-				<div th:if="${#fields.hasErrors('username')}"
-					th:errors="${signupForm.username}"></div>
-			</div>
-			<div class="form-floating">
-				<input type="password" class="form-control" id="password"
-					name="password" placeholder="Password"
-					th:value="${signupForm.password}"> <label
-					for="floatingPassword">Password</label>
-				<div th:if="${#fields.hasErrors('password')}"
-					th:errors="${signupForm.password}"></div>
-			</div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" th:value="${signupForm.username}"> <label for="floatingInput">Username</label>
+                <div th:if="${#fields.hasErrors('username')}" th:errors="${signupForm.username}"></div>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" th:value="${signupForm.password}"> <label for="floatingPassword">Password</label>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="${signupForm.password}"></div>
+            </div>
 
-			<button class="w-100 btn btn-lg btn-primary" type="submit">Sign
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign
 				up</button>
 
-		</form>
-		<a href="/signin">Sign in</a>
-	</main>
+        </form>
+        <a href="/signin">Sign in</a>
+    </main>
 </body>
+
 </html>
