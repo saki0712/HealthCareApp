@@ -49,8 +49,6 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	classpath 'org.hidetake:gradle-ssh-plugin:0.4.5'
-
 }
 
 /*
