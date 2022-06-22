@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>モチベ記録</title>
+    <title>モチベ履歴</title>
     <link rel="icon" type="image/x-icon" href="img/heartlogo.png" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
@@ -14,14 +14,14 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/condition_data.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 </head>
 
 <body>
     <header>
         <h1 class="site-heading text-center text-faded d-none d-lg-block">
-            <span class="site-heading-upper text-primary mb-3">Have A Bird's-eye view of Your Motivation</span>
+            <span class="site-heading-upper text-purple mb-3">Have A Bird's-eye view of Your Motivation</span>
             <span class="site-heading-lower">Motivation Support</span>
         </h1>
     </header>
@@ -32,7 +32,7 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/}">HOME</a></li>
                     <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/insert}">モチベ登録</a></li>
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ記録</a>
+                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition}">モチベ履歴</a>
                     </li>
                     <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/graph}">モチベグラフ</a></li>
                     <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" th:href="@{/condition/photos}">アルバム写真</a></li>
@@ -49,8 +49,21 @@
                 <div class="col-xl-9 mx-auto">
                     <div class="cta-inner bg-faded text-center rounded">
                         <h2 class="section-heading mb-5">
-                            <span class="section-heading-lower">モチベ記録</span>
+                            <span class="section-heading-lower">モチベ履歴</span>
                         </h2>
+                        <div class="wrapper">
+                            <!-- xxxx年xx月を表示 -->
+                            <h3 id="header"></h3>
+
+                            <!-- ボタンクリックで月移動 -->
+                            <div id="next-prev-button">
+                                <button id="prev" onclick="prev()">‹</button>
+                                <button id="next" onclick="next()">›</button>
+                            </div>
+
+                            <!-- カレンダー -->
+                            <div id="calendar"></div>
+                        </div>
 
 
 
@@ -68,6 +81,87 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        const week = ["日", "月", "火", "水", "木", "金", "土"];
+        const today = new Date();
+        // 月末だとずれる可能性があるため、1日固定で取得
+        var showDate = new Date(today.getFullYear(), today.getMonth(), 1);
+
+        // 初期表示
+        window.onload = function() {
+            showProcess(today, calendar);
+        };
+        // 前の月表示
+        function prev() {
+            showDate.setMonth(showDate.getMonth() - 1);
+            showProcess(showDate);
+        }
+
+        // 次の月表示
+        function next() {
+            showDate.setMonth(showDate.getMonth() + 1);
+            showProcess(showDate);
+        }
+
+        // カレンダー表示
+        function showProcess(date) {
+            var year = date.getFullYear();
+            var month = date.getMonth();
+            document.querySelector('#header').innerHTML = year + "年 " + (month + 1) + "月";
+
+            var calendar = createProcess(year, month);
+            document.querySelector('#calendar').innerHTML = calendar;
+        }
+
+        // カレンダー作成
+        function createProcess(year, month) {
+            // 曜日
+            var calendar = "<table><tr class='dayOfWeek'>";
+            for (var i = 0; i < week.length; i++) {
+                calendar += "<th>" + week[i] + "</th>";
+            }
+            calendar += "</tr>";
+
+            var count = 0;
+            var startDayOfWeek = new Date(year, month, 1).getDay();
+            var endDate = new Date(year, month + 1, 0).getDate();
+            var lastMonthEndDate = new Date(year, month, 0).getDate();
+            var row = Math.ceil((startDayOfWeek + endDate) / week.length);
+
+            // 1行ずつ設定
+            for (var i = 0; i < row; i++) {
+                calendar += "<tr>";
+                // 1colum単位で設定
+                for (var j = 0; j < week.length; j++) {
+                    if (i == 0 && j < startDayOfWeek) {
+                        // 1行目で1日まで先月の日付を設定
+                        calendar += "<td class='disabled'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
+                    } else if (count >= endDate) {
+                        // 最終行で最終日以降、翌月の日付を設定
+                        count++;
+                        calendar += "<td class='disabled'>" + (count - endDate) + "</td>";
+                    } else {
+                        // 当月の日付を曜日に照らし合わせて設定
+                        count++;
+                        if (year == today.getFullYear() &&
+                            month == (today.getMonth()) &&
+                            count == today.getDate()) {
+                            calendar += "<td class='today'>" + count + "</td>";
+                        } else {
+                            calendar += "<td>" + count + "</td>";
+                        }
+                    }
+                }
+                calendar += "</tr>";
+            }
+            return calendar;
+        }
+
+        // DBにあるdayと一致→詳細ボタンでcondition_details画面へ　ない→登録ボタンでcondition_register画面
+        // カレンダーの日付とDBのdayを照合するday関数を作成する
+        //day関数を使用して詳細か登録ボタンをカレンダーに表示する
+    </script>
 </body>
 
 </html>
