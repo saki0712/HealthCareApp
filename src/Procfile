@@ -1,0 +1,2 @@
+web: java -Dserver.port=$PORT -jar build/libs/HealthCareApp-0.1.0.jar
+web: java -Dspring.profiles.active=heroku -Dserver.port=$PORT -jar build/libs/HealthCareApp-0.1.0.jar
