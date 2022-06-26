@@ -53,6 +53,7 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 }
 
+defaultTasks "clean", "build"
 
 jar {
     manifest {
