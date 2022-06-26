@@ -55,9 +55,7 @@ dependencies {
 
 defaultTasks "clean", "build"
 
-task wrapper(type: Wrapper) {
-	gradleVersion = '7.4.2'
-}
+task stage(dependsOn: ['clean', 'installApp'])
 
 jar {
     manifest {
