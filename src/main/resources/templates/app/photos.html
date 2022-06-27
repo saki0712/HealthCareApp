@@ -70,6 +70,7 @@
                             const clientId = '161028806287-mgek8112ncpd33n47jcon132sipromq8.apps.googleusercontent.com';
                             const discoveryDocs = [];
                             const scopes = 'https://www.googleapis.com/auth/photoslibrary';
+                            const plugin_name = 'hcapp';
 
                             // Google API Client Library for JavaScript ロード時のイベント
                             function handleClientLoad() {
@@ -78,7 +79,8 @@
                                         apiKey: apiKey,
                                         discoveryDocs: discoveryDocs,
                                         clientId: clientId,
-                                        scope: scopes
+                                        scope: scopes,
+                                        plugin_name: "HealthCareApp"
                                     }).then(function() {
                                         // サインイン状態を監視し、状態に変化があったときに「updateSigninStatus」を呼ぶ
                                         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
