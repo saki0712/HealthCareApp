@@ -10,7 +10,7 @@ CREATE TABLE condition
 (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    user_name NOT NULL REFERENCES user (user_name),
-   day datetime NOT NULL,
+   day date NOT NULL UNIQUE,
    menatl INT NOT NULL,
    memo VARCHAR(80) NOT NULL
 );
