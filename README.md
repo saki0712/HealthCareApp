@@ -4,18 +4,28 @@ This tool enables you to visualize your motivation history and support your ment
 
 # Description
 
-This tool shows your flactuating motivation graphically.
-②Google Photosのアルバムを取得してランダムでスライドショー表示できます。
+This tool shows your flactuating motivation graphically. For staying well psychically, the feaure is included that plays a slide show that contains your Google Photos albums.
+
+# Demo
+
+Please wait...
 
 # Usage
 
-DEMOの実行方法など、"hoge"の基本的な使い方を説明する
+Please wait...
 
 ```bash
-git clone https://github.com/hoge/~
-cd examples
-python demo.py
+git clone https://github.com/healthcareapp/~
+cd healthcareapp
 ```
+
+# Requirement
+
+Please wait...
+
+# Note
+
+This tool uses the Google Sign-In JavaScript Platform Library for web now, so is planed to be updated to use the new Google Identity Services for Web.
 
 # Author
 
@@ -24,4 +34,4 @@ python demo.py
 
 # License
 
-モチベアプリ is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+MotivationApp is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
