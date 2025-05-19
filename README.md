@@ -12,8 +12,7 @@ This tool uses the Google Sign-In JavaScript Platform Library for web now, so is
 
 # Author
 
-* Saki Tanaka
-* camsahopa@gmail.com
+* Sakit
 
 # License
 
